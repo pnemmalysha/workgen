@@ -1,5 +1,5 @@
 import kivy
-#kivy.require('2.1.0')
+kivy.require('2.1.0')
 
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
@@ -92,6 +92,8 @@ class MainWindow(GridLayout):
         #self.CISCO.text = ''
         self.SN.text = ''
 
+    def do_test(self, *args, **kwargs):
+        pass
 
 
 class WorkGenApp(App):
