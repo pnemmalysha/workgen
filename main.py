@@ -95,6 +95,10 @@ class MainWindow(GridLayout):
     def do_test(self, *args, **kwargs):
         pass
 
+    def do_test_number_2(self, *args, **kwargs):
+        pass
+
+
 
 class WorkGenApp(App):
     def build(self):
