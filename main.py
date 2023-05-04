@@ -101,6 +101,9 @@ class MainWindow(GridLayout):
     def do_test_number_3(self, *args, **kwargs):
         pass
         print('small comment part 1')
+        print('small comment part 2')
+        print('small comment part 3. final.')
+        print('small comment part 4. real final.')
 
 
 class WorkGenApp(App):
