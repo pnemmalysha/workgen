@@ -105,6 +105,9 @@ class MainWindow(GridLayout):
         print('small comment part 3. final.')
         print('small comment part 4. real final.')
 
+    def do_test_4(self, *args, **kwargs):
+        pass
+
 
 class WorkGenApp(App):
     def build(self):
