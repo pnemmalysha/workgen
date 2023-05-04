@@ -108,6 +108,9 @@ class MainWindow(GridLayout):
     def do_test_4(self, *args, **kwargs):
         pass
 
+    def do_test_5(self, *args, **kwargs):
+        pass
+
 
 class WorkGenApp(App):
     def build(self):
