@@ -76,7 +76,16 @@ class MainWindow(GridLayout):
         print('ooppss')
 
     def print_result(self, *args, **kwargs):
-        self.add_widget(TextInput(text = self.result))
+        a = ResultWidged()
+        a.text = self.result
+        a.size_hint = (1, None)
+        a.height = 250
+        self.add_widget(a)
+        #b = ResultWidged()
+        #b.text = self.result
+        #self.add_widget(b)
+        #a.text = 'To delete'
+        #self.remove_widget(a)
 
     def clear_result(self, *args, **kwargs):
         pass
@@ -110,6 +119,13 @@ class MainWindow(GridLayout):
 
     def do_test_5(self, *args, **kwargs):
         pass
+
+
+class ResultWidged(TextInput):
+    def __init__(self, **kwargs):
+        #self.text = ''
+        super().__init__(**kwargs)
+
 
 
 class WorkGenApp(App):
