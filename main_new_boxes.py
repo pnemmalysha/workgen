@@ -17,9 +17,10 @@ class LeftCol_Left(BoxLayout):
         self.orientation = 'vertical'
 
         # check what attributes is
-        print(self.__dir__())
-        for i in self.__dir__():
-            print(i, self.__getattribute__(i))
+        # print('\033[1m' + '\033[31m' + '\033[7m' + str(self) + '\033[0m')
+        # print(self.__dir__())
+        # for i in self.__dir__():
+        #     print(i, self.__getattribute__(i))
 
         self.add_widget(Button(text = "LeftCol_Left_1"))
         self.add_widget(Button(text = "LeftCol_Left_2"))
@@ -57,9 +58,28 @@ class LeftCol(BoxLayout):
         self.add_widget(LeftCol_Right())
 
 
+class RigthCol_Top(BoxLayout):
+    def __init__(self, **kwargs):
+        super(RigthCol_Top, self).__init__(**kwargs)
+
+        # check what attributes is
+        print('\033[1m' + '\033[31m' + '\033[7m' + str(self) + '\033[0m')
+        print(self.__dir__())
+        for i in self.__dir__():
+            print(i, self.__getattribute__(i))
+
+        self.add_widget(Button(text = "RigthCol\n_Top_1"))
+        self.add_widget(Button(text = "RigthCol\n_Top_2"))
+        self.add_widget(Button(text = "RigthCol\n_Top_3"))
+        self.add_widget(Button(text = "RigthCol\n_Top_4"))
+
+
 class RigthCol(BoxLayout):
     def __init__(self, **kwargs):
         super(RigthCol, self).__init__(**kwargs)
+        self.orientation = 'vertical'
+
+        self.add_widget(RigthCol_Top(size_hint_y = 0.2))
         self.add_widget(Button(text = "RigthCol"))
 
 
