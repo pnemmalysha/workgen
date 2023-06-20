@@ -1,14 +1,26 @@
+# 
+
 import kivy
 kivy.require('2.1.0')
 
 from kivy.app import App
 # from kivy.uix.stacklayout import StackLayout
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.anchorlayout import AnchorLayout
 # from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 # from kivy.uix.textinput import TextInput
 
+
+class Helper():
+    def help(obj):
+        print('\033[1m' + '\033[31m' + str(obj) + '\033[0m')
+        print(obj.__dir__())
+        for i in obj.__dir__():
+            print(i, obj.__getattribute__(i)) \
+            if 'object' not in str(obj.__getattribute__(i)) else None
 
 
 class LeftCol_Left(BoxLayout):
@@ -63,10 +75,11 @@ class RigthCol_Top(BoxLayout):
         super(RigthCol_Top, self).__init__(**kwargs)
 
         # check what attributes is
-        print('\033[1m' + '\033[31m' + '\033[7m' + str(self) + '\033[0m')
-        print(self.__dir__())
-        for i in self.__dir__():
-            print(i, self.__getattribute__(i))
+        # print('\033[1m' + '\033[31m' + '\033[7m' + str(self) + '\033[0m')
+        # print(self.__dir__())
+        # for i in self.__dir__():
+            # print(i, self.__getattribute__(i))
+        # Helper.help(self)
 
         self.add_widget(Button(text = "RigthCol\n_Top_1"))
         self.add_widget(Button(text = "RigthCol\n_Top_2"))
@@ -91,9 +104,41 @@ class MainWindow(BoxLayout):
         self.add_widget(RigthCol())
 
 
+class FlexLabel(Label):
+    def __init__(self, **kwargs):
+        super(FlexLabel, self).__init__(**kwargs)
+        self.size_hint = (None, None)
+        self.size = self.texture_size
+
+        def update_label(instance, value):
+            instance.size = instance.texture_size
+
+        self.bind(texture_size=update_label)
+
+
+class Signature(AnchorLayout):
+    def __init__(self, **kwargs):
+        super(Signature, self).__init__(**kwargs)
+        self.anchor_x = 'right'
+        self.anchor_y = 'bottom'
+        self.padding = [5, 5, 5, 5]
+        my_lbl = FlexLabel(text = 'Misha was here',
+                       color = [1, 1, 1, 0.2])
+        self.add_widget(my_lbl)
+
+
+class RootWindow(FloatLayout):
+    def __init__(self, **kwargs):
+        super(RootWindow, self).__init__(**kwargs)
+
+        self.add_widget(MainWindow())
+        self.add_widget(Signature())
+
+
+
 class WorkGenApp(App):
     def build(self):
-        w = MainWindow()
+        w = RootWindow()
         return w
 
 
