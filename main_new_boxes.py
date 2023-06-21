@@ -12,6 +12,7 @@ from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 # from kivy.uix.textinput import TextInput
+from kivy.graphics import Color, Rectangle
 
 
 class Helper():
@@ -23,26 +24,42 @@ class Helper():
             if 'object' not in str(obj.__getattribute__(i)) else None
 
 
+class CustomLabel(Label):
+    def __init__(self, **kwargs):
+        self.text = ''
+        self.color = [0, 0, 0, 1]
+        super(CustomLabel, self).__init__(**kwargs)
+
+        with self.canvas.before:
+            Color(1, 1, 1, 0.5)
+            self.rect = Rectangle(size = self.size, pos = self.pos)
+
+        def update_rect(instance, value):
+            instance.rect.size = instance.size
+            instance.rect.pos = instance.pos
+            # Helper.help(self)
+            # Helper.help(self.rect)
+
+        self.bind(pos=update_rect, size=update_rect)
+
+
 class LeftCol_Left(BoxLayout):
     def __init__(self, **kwargs):
         super(LeftCol_Left, self).__init__(**kwargs)
         self.orientation = 'vertical'
+        self.padding = [1, 1, 1, 1]
+        self.spacing = 1
+        # Helper.help(self)
 
-        # check what attributes is
-        # print('\033[1m' + '\033[31m' + '\033[7m' + str(self) + '\033[0m')
-        # print(self.__dir__())
-        # for i in self.__dir__():
-        #     print(i, self.__getattribute__(i))
-
-        self.add_widget(Button(text = "LeftCol_Left_1"))
-        self.add_widget(Button(text = "LeftCol_Left_2"))
-        self.add_widget(Button(text = "LeftCol_Left_3"))
-        self.add_widget(Button(text = "LeftCol_Left_4"))
-        self.add_widget(Button(text = "LeftCol_Left_5"))
-        self.add_widget(Button(text = "LeftCol_Left_6"))
-        self.add_widget(Button(text = "LeftCol_Left_7"))
-        self.add_widget(Button(text = "LeftCol_Left_8"))
-        self.add_widget(Button(text = "LeftCol_Left_9"))
+        self.add_widget(CustomLabel(text = "Имя ОСП"))
+        self.add_widget(CustomLabel(text = "Дата"))
+        self.add_widget(CustomLabel(text = "Имя wap"))
+        self.add_widget(CustomLabel(text = "MAC wap"))
+        self.add_widget(CustomLabel(text = "Модель wap"))
+        self.add_widget(CustomLabel(text = "Порт на sw"))
+        self.add_widget(CustomLabel(text = "Имя sw"))
+        self.add_widget(CustomLabel(text = "Модель sw"))
+        self.add_widget(CustomLabel(text = "SN sw"))
 
 
 class LeftCol_Right(BoxLayout):
@@ -73,12 +90,6 @@ class LeftCol(BoxLayout):
 class RigthCol_Top(BoxLayout):
     def __init__(self, **kwargs):
         super(RigthCol_Top, self).__init__(**kwargs)
-
-        # check what attributes is
-        # print('\033[1m' + '\033[31m' + '\033[7m' + str(self) + '\033[0m')
-        # print(self.__dir__())
-        # for i in self.__dir__():
-            # print(i, self.__getattribute__(i))
         # Helper.help(self)
 
         self.add_widget(Button(text = "RigthCol\n_Top_1"))
