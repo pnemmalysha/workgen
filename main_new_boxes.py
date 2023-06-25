@@ -74,15 +74,15 @@ class LeftCol_Right(BoxLayout):
         super(LeftCol_Right, self).__init__(**kwargs)
         self.orientation = 'vertical'
 
-        self.add_widget(CustomTextInput(text = "LeftCol_Right_1"))
-        self.add_widget(CustomTextInput(text = "LeftCol_Right_2"))
-        self.add_widget(CustomTextInput(text = "LeftCol_Right_3"))
-        self.add_widget(CustomTextInput(text = "LeftCol_Right_4"))
-        self.add_widget(CustomTextInput(text = "LeftCol_Right_5"))
-        self.add_widget(CustomTextInput(text = "LeftCol_Right_6"))
-        self.add_widget(CustomTextInput(text = "LeftCol_Right_7"))
-        self.add_widget(CustomTextInput(text = "LeftCol_Right_8"))
-        self.add_widget(CustomTextInput(text = "LeftCol_Right_9"))
+        self.add_widget(CustomTextInput(text = "Новосибирск РЦ"))
+        self.add_widget(CustomTextInput(text = "26.06.2023 17:10 МСК"))
+        self.add_widget(CustomTextInput(text = "wap-nsk-rc-done-11"))
+        self.add_widget(CustomTextInput(text = "78:45:58:70:a9:70"))
+        self.add_widget(CustomTextInput(text = "UniFi AP-AC-Mesh"))
+        self.add_widget(CustomTextInput(text = "3"))
+        self.add_widget(CustomTextInput(text = "sw-nsk-rc-ku-5-1"))
+        self.add_widget(CustomTextInput(text = "Cisco"))
+        self.add_widget(CustomTextInput(text = "JTV2149106P"))
 
 
 
@@ -94,6 +94,18 @@ class LeftCol(BoxLayout):
         self.add_widget(LeftCol_Right())
 
 
+class GenerateButton(Button):
+    def __init__(self, **kwargs):
+        super(GenerateButton, self).__init__(**kwargs)
+        self.background_down = 'atlas://data/images/defaulttheme/button'
+        self.background_normal = 'atlas://data/images/defaulttheme/button_pressed'
+        self.background_color = [0, 1, 0, 1]
+        self.font_size = 20
+        self.color = [0, 0, 0, 1]
+        self.text = 'Generate'
+
+
+
 class RigthCol_Top(BoxLayout):
     def __init__(self, **kwargs):
         super(RigthCol_Top, self).__init__(**kwargs)
@@ -102,7 +114,7 @@ class RigthCol_Top(BoxLayout):
         self.add_widget(Button(text = "RigthCol\n_Top_1"))
         self.add_widget(Button(text = "RigthCol\n_Top_2"))
         self.add_widget(Button(text = "RigthCol\n_Top_3"))
-        self.add_widget(Button(text = "RigthCol\n_Top_4"))
+        self.add_widget(GenerateButton())
 
 
 class RigthCol(BoxLayout):
@@ -111,7 +123,7 @@ class RigthCol(BoxLayout):
         self.orientation = 'vertical'
 
         self.add_widget(RigthCol_Top(size_hint_y = 0.2))
-        self.add_widget(Button(text = "RigthCol"))
+        self.add_widget(CustomTextInput(text = ""))
 
 
 class MainWindow(BoxLayout):
