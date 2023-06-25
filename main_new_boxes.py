@@ -11,7 +11,7 @@ from kivy.uix.anchorlayout import AnchorLayout
 # from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
-# from kivy.uix.textinput import TextInput
+from kivy.uix.textinput import TextInput
 from kivy.graphics import Color, Rectangle
 
 
@@ -62,20 +62,27 @@ class LeftCol_Left(BoxLayout):
         self.add_widget(CustomLabel(text = "SN sw"))
 
 
+class CustomTextInput(TextInput):
+    def __init__(self, **kwargs):
+        super(CustomTextInput, self).__init__(**kwargs)
+        self.multiline = False
+        self.write_tab = False
+
+
 class LeftCol_Right(BoxLayout):
     def __init__(self, **kwargs):
         super(LeftCol_Right, self).__init__(**kwargs)
         self.orientation = 'vertical'
 
-        self.add_widget(Button(text = "LeftCol_Right_1"))
-        self.add_widget(Button(text = "LeftCol_Right_2"))
-        self.add_widget(Button(text = "LeftCol_Right_3"))
-        self.add_widget(Button(text = "LeftCol_Right_4"))
-        self.add_widget(Button(text = "LeftCol_Right_5"))
-        self.add_widget(Button(text = "LeftCol_Right_6"))
-        self.add_widget(Button(text = "LeftCol_Right_7"))
-        self.add_widget(Button(text = "LeftCol_Right_8"))
-        self.add_widget(Button(text = "LeftCol_Right_9"))
+        self.add_widget(CustomTextInput(text = "LeftCol_Right_1"))
+        self.add_widget(CustomTextInput(text = "LeftCol_Right_2"))
+        self.add_widget(CustomTextInput(text = "LeftCol_Right_3"))
+        self.add_widget(CustomTextInput(text = "LeftCol_Right_4"))
+        self.add_widget(CustomTextInput(text = "LeftCol_Right_5"))
+        self.add_widget(CustomTextInput(text = "LeftCol_Right_6"))
+        self.add_widget(CustomTextInput(text = "LeftCol_Right_7"))
+        self.add_widget(CustomTextInput(text = "LeftCol_Right_8"))
+        self.add_widget(CustomTextInput(text = "LeftCol_Right_9"))
 
 
 
