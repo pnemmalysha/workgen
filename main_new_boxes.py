@@ -44,22 +44,22 @@ class CustomLabel(Label):
 
 
 class LeftCol_Left(BoxLayout):
-    def __init__(self, **kwargs):
+    def __init__(self, MainWindow, **kwargs):
         super(LeftCol_Left, self).__init__(**kwargs)
         self.orientation = 'vertical'
         self.padding = [1, 1, 1, 1]
         self.spacing = 1
         # Helper.help(self)
 
-        self.add_widget(CustomLabel(text = "Имя ОСП"))
-        self.add_widget(CustomLabel(text = "Дата"))
-        self.add_widget(CustomLabel(text = "Имя wap"))
-        self.add_widget(CustomLabel(text = "MAC wap"))
-        self.add_widget(CustomLabel(text = "Модель wap"))
-        self.add_widget(CustomLabel(text = "Порт на sw"))
-        self.add_widget(CustomLabel(text = "Имя sw"))
-        self.add_widget(CustomLabel(text = "Модель sw"))
-        self.add_widget(CustomLabel(text = "SN sw"))
+        self.add_widget(CustomLabel(text = MainWindow.bank['OSP']['label']))
+        self.add_widget(CustomLabel(text = MainWindow.bank['DATE']['label']))
+        self.add_widget(CustomLabel(text = MainWindow.bank['WAPNAME']['label']))
+        self.add_widget(CustomLabel(text = MainWindow.bank['WAPMAC']['label']))
+        self.add_widget(CustomLabel(text = MainWindow.bank['WAPMODEL']['label']))
+        self.add_widget(CustomLabel(text = MainWindow.bank['PORTNUM']['label']))
+        self.add_widget(CustomLabel(text = MainWindow.bank['SWNAME']['label']))
+        self.add_widget(CustomLabel(text = MainWindow.bank['SWMODEL']['label']))
+        self.add_widget(CustomLabel(text = MainWindow.bank['SWSN']['label']))
 
 
 class CustomTextInput(TextInput):
@@ -67,31 +67,32 @@ class CustomTextInput(TextInput):
         super(CustomTextInput, self).__init__(**kwargs)
         self.multiline = False
         self.write_tab = False
+        # Helper.help(self)
 
 
 class LeftCol_Right(BoxLayout):
-    def __init__(self, **kwargs):
+    def __init__(self, MainWindow, **kwargs):
         super(LeftCol_Right, self).__init__(**kwargs)
         self.orientation = 'vertical'
 
-        self.add_widget(CustomTextInput(text = "Новосибирск РЦ"))
-        self.add_widget(CustomTextInput(text = "26.06.2023 17:10 МСК"))
-        self.add_widget(CustomTextInput(text = "wap-nsk-rc-done-11"))
-        self.add_widget(CustomTextInput(text = "78:45:58:70:a9:70"))
-        self.add_widget(CustomTextInput(text = "UniFi AP-AC-Mesh"))
-        self.add_widget(CustomTextInput(text = "3"))
-        self.add_widget(CustomTextInput(text = "sw-nsk-rc-ku-5-1"))
-        self.add_widget(CustomTextInput(text = "Cisco"))
-        self.add_widget(CustomTextInput(text = "JTV2149106P"))
-
+        self.add_widget(CustomTextInput(text = MainWindow.bank['OSP']['data']))
+        self.add_widget(CustomTextInput(text = MainWindow.bank['DATE']['data']))
+        self.add_widget(CustomTextInput(text = MainWindow.bank['WAPNAME']['data']))
+        self.add_widget(CustomTextInput(text = MainWindow.bank['WAPMAC']['data']))
+        self.add_widget(CustomTextInput(text = MainWindow.bank['WAPMODEL']['data']))
+        self.add_widget(CustomTextInput(text = MainWindow.bank['PORTNUM']['data']))
+        self.add_widget(CustomTextInput(text = MainWindow.bank['SWNAME']['data']))
+        self.add_widget(CustomTextInput(text = MainWindow.bank['SWMODEL']['data']))
+        self.add_widget(CustomTextInput(text = MainWindow.bank['SWSN']['data']))
 
 
 class LeftCol(BoxLayout):
-    def __init__(self, **kwargs):
+    def __init__(self, MainWindow, **kwargs):
         super(LeftCol, self).__init__(**kwargs)
 
-        self.add_widget(LeftCol_Left(size_hint=(.5, 1)))
-        self.add_widget(LeftCol_Right())
+        lcl = LeftCol_Left(MainWindow, size_hint=(.5, 1))
+        self.add_widget(lcl)
+        self.add_widget(LeftCol_Right(MainWindow))
 
 
 class GenerateButton(Button):
@@ -100,10 +101,10 @@ class GenerateButton(Button):
         self.background_down = 'atlas://data/images/defaulttheme/button'
         self.background_normal = 'atlas://data/images/defaulttheme/button_pressed'
         self.background_color = [0, 1, 0, 1]
-        self.font_size = 20
-        self.color = [0, 0, 0, 1]
-        self.text = 'Generate'
-
+        self.font_size = 18
+        # self.bold = True
+        # self.color = [0, 0, 0, 1]
+        self.text = 'GENERATE'
 
 
 class RigthCol_Top(BoxLayout):
@@ -117,21 +118,50 @@ class RigthCol_Top(BoxLayout):
         self.add_widget(GenerateButton())
 
 
+class ResultTextInput(TextInput):
+    def __init__(self, MainWindow, **kwargs):
+        super(ResultTextInput, self).__init__(**kwargs)
+        # Helper.help(self)
+
+        self.text = f"""Добрый день
+Заявка для ОПВТ.
+В ОСП {MainWindow.bank['OSP']['data']} недоступна точка доступа после {MainWindow.bank['DATE']['data']}
+{MainWindow.bank['WAPNAME']['data']} {MainWindow.bank['WAPMAC']['data']} - {MainWindow.bank['WAPMODEL']['data']}
+Была подключена в {MainWindow.bank['PORTNUM']['data']} порт коммутатора {MainWindow.bank['SWNAME']['data']} ({MainWindow.bank['SWMODEL']['data']}, SN: {MainWindow.bank['SWSN']['data']}).
+Прошу проверить/перезагрузить ТД."""
+
+
+
 class RigthCol(BoxLayout):
-    def __init__(self, **kwargs):
+    def __init__(self, MainWindow, **kwargs):
         super(RigthCol, self).__init__(**kwargs)
         self.orientation = 'vertical'
 
         self.add_widget(RigthCol_Top(size_hint_y = 0.2))
-        self.add_widget(CustomTextInput(text = ""))
+
+        result = ResultTextInput(MainWindow)
+        self.add_widget(result)
+        # print(Helper.help(result.parent))
 
 
 class MainWindow(BoxLayout):
     def __init__(self, **kwargs):
         super(MainWindow, self).__init__(**kwargs)
+        self.bank = {'OSP': {'label': "Имя ОСП", 'data': "Новосибирск РЦ"},
+                     'DATE': {'label': "Дата", 'data': "26.06.2023 17:10 МСК"},
+                     'WAPNAME': {'label': "Имя wap", 'data': "wap-nsk-rc-done-11"},
+                     'WAPMAC': {'label': "MAC wap", 'data': "78:45:58:70:a9:70"},
+                     'WAPMODEL': {'label': "Модель wap", 'data': "UniFi AP-AC-Mesh"},
+                     'PORTNUM': {'label': "Порт на sw", 'data': "3"},
+                     'SWNAME': {'label': "Имя sw", 'data': "sw-nsk-rc-ku-5-1"},
+                     'SWMODEL': {'label': "Модель sw", 'data': "Cisco"},
+                     'SWSN': {'label': "SN sw", 'data': "JTV2149106P"},
+                     }
 
-        self.add_widget(LeftCol())
-        self.add_widget(RigthCol())
+        lc = LeftCol(self)
+        self.add_widget(lc)
+        rc = RigthCol(self)
+        self.add_widget(rc)
 
 
 class FlexLabel(Label):
@@ -163,7 +193,6 @@ class RootWindow(FloatLayout):
 
         self.add_widget(MainWindow())
         self.add_widget(Signature())
-
 
 
 class WorkGenApp(App):
