@@ -44,22 +44,22 @@ class CustomLabel(Label):
 
 
 class LeftCol_Left(BoxLayout):
-    def __init__(self, MainWindow, **kwargs):
+    def __init__(self, mainwindow, **kwargs):
         super(LeftCol_Left, self).__init__(**kwargs)
         self.orientation = 'vertical'
         self.padding = [1, 1, 1, 1]
         self.spacing = 1
         # Helper.help(self)
 
-        self.add_widget(CustomLabel(text = MainWindow.bank['OSP']['label']))
-        self.add_widget(CustomLabel(text = MainWindow.bank['DATE']['label']))
-        self.add_widget(CustomLabel(text = MainWindow.bank['WAPNAME']['label']))
-        self.add_widget(CustomLabel(text = MainWindow.bank['WAPMAC']['label']))
-        self.add_widget(CustomLabel(text = MainWindow.bank['WAPMODEL']['label']))
-        self.add_widget(CustomLabel(text = MainWindow.bank['PORTNUM']['label']))
-        self.add_widget(CustomLabel(text = MainWindow.bank['SWNAME']['label']))
-        self.add_widget(CustomLabel(text = MainWindow.bank['SWMODEL']['label']))
-        self.add_widget(CustomLabel(text = MainWindow.bank['SWSN']['label']))
+        self.add_widget(CustomLabel(text = mainwindow.bank['OSP']['label']))
+        self.add_widget(CustomLabel(text = mainwindow.bank['DATE']['label']))
+        self.add_widget(CustomLabel(text = mainwindow.bank['WAPNAME']['label']))
+        self.add_widget(CustomLabel(text = mainwindow.bank['WAPMAC']['label']))
+        self.add_widget(CustomLabel(text = mainwindow.bank['WAPMODEL']['label']))
+        self.add_widget(CustomLabel(text = mainwindow.bank['PORTNUM']['label']))
+        self.add_widget(CustomLabel(text = mainwindow.bank['SWNAME']['label']))
+        self.add_widget(CustomLabel(text = mainwindow.bank['SWMODEL']['label']))
+        self.add_widget(CustomLabel(text = mainwindow.bank['SWSN']['label']))
 
 
 class CustomTextInput(TextInput):
@@ -71,28 +71,28 @@ class CustomTextInput(TextInput):
 
 
 class LeftCol_Right(BoxLayout):
-    def __init__(self, MainWindow, **kwargs):
+    def __init__(self, mainwindow, **kwargs):
         super(LeftCol_Right, self).__init__(**kwargs)
         self.orientation = 'vertical'
 
-        self.add_widget(CustomTextInput(text = MainWindow.bank['OSP']['data']))
-        self.add_widget(CustomTextInput(text = MainWindow.bank['DATE']['data']))
-        self.add_widget(CustomTextInput(text = MainWindow.bank['WAPNAME']['data']))
-        self.add_widget(CustomTextInput(text = MainWindow.bank['WAPMAC']['data']))
-        self.add_widget(CustomTextInput(text = MainWindow.bank['WAPMODEL']['data']))
-        self.add_widget(CustomTextInput(text = MainWindow.bank['PORTNUM']['data']))
-        self.add_widget(CustomTextInput(text = MainWindow.bank['SWNAME']['data']))
-        self.add_widget(CustomTextInput(text = MainWindow.bank['SWMODEL']['data']))
-        self.add_widget(CustomTextInput(text = MainWindow.bank['SWSN']['data']))
+        self.add_widget(CustomTextInput(text = mainwindow.bank['OSP']['data']))
+        self.add_widget(CustomTextInput(text = mainwindow.bank['DATE']['data']))
+        self.add_widget(CustomTextInput(text = mainwindow.bank['WAPNAME']['data']))
+        self.add_widget(CustomTextInput(text = mainwindow.bank['WAPMAC']['data']))
+        self.add_widget(CustomTextInput(text = mainwindow.bank['WAPMODEL']['data']))
+        self.add_widget(CustomTextInput(text = mainwindow.bank['PORTNUM']['data']))
+        self.add_widget(CustomTextInput(text = mainwindow.bank['SWNAME']['data']))
+        self.add_widget(CustomTextInput(text = mainwindow.bank['SWMODEL']['data']))
+        self.add_widget(CustomTextInput(text = mainwindow.bank['SWSN']['data']))
 
 
 class LeftCol(BoxLayout):
-    def __init__(self, MainWindow, **kwargs):
+    def __init__(self, mainwindow, **kwargs):
         super(LeftCol, self).__init__(**kwargs)
 
-        lcl = LeftCol_Left(MainWindow, size_hint=(.5, 1))
+        lcl = LeftCol_Left(mainwindow, size_hint=(.5, 1))
         self.add_widget(lcl)
-        self.add_widget(LeftCol_Right(MainWindow))
+        self.add_widget(LeftCol_Right(mainwindow))
 
 
 class GenerateButton(Button):
@@ -108,38 +108,54 @@ class GenerateButton(Button):
 
 
 class RigthCol_Top(BoxLayout):
-    def __init__(self, **kwargs):
+    def __init__(self, mainwindow, result, **kwargs):
         super(RigthCol_Top, self).__init__(**kwargs)
+        self.mainwindow = mainwindow
+        self.result = result
         # Helper.help(self)
 
         self.add_widget(Button(text = "RigthCol\n_Top_1"))
         self.add_widget(Button(text = "RigthCol\n_Top_2"))
         self.add_widget(Button(text = "RigthCol\n_Top_3"))
-        self.add_widget(GenerateButton())
+        gb = GenerateButton()
+        gb.bind(on_press=self.callback)
+        self.add_widget(gb)
+    def callback(self, instance):
+        print(self.result.text)
+        print(self.mainwindow)
+        print(self.mainwindow.bank)
+        self.mainwindow.bank['SWSN']['data'] = 'xxx'
+        print(f'The button {instance.text} is being pressed')
+        print(self.mainwindow.bank)
+        print(self.mainwindow)
+        print(self.result.text)
+
+
 
 
 class ResultTextInput(TextInput):
-    def __init__(self, MainWindow, **kwargs):
+    def __init__(self, mainwindow, **kwargs):
         super(ResultTextInput, self).__init__(**kwargs)
         # Helper.help(self)
+        print(mainwindow)
 
         self.text = f"""Добрый день
 Заявка для ОПВТ.
-В ОСП {MainWindow.bank['OSP']['data']} недоступна точка доступа после {MainWindow.bank['DATE']['data']}
-{MainWindow.bank['WAPNAME']['data']} {MainWindow.bank['WAPMAC']['data']} - {MainWindow.bank['WAPMODEL']['data']}
-Была подключена в {MainWindow.bank['PORTNUM']['data']} порт коммутатора {MainWindow.bank['SWNAME']['data']} ({MainWindow.bank['SWMODEL']['data']}, SN: {MainWindow.bank['SWSN']['data']}).
+В ОСП {mainwindow.bank['OSP']['data']} недоступна точка доступа после {mainwindow.bank['DATE']['data']}
+{mainwindow.bank['WAPNAME']['data']} {mainwindow.bank['WAPMAC']['data']} - {mainwindow.bank['WAPMODEL']['data']}
+Была подключена в {mainwindow.bank['PORTNUM']['data']} порт коммутатора {mainwindow.bank['SWNAME']['data']} ({mainwindow.bank['SWMODEL']['data']}, SN: {mainwindow.bank['SWSN']['data']}).
 Прошу проверить/перезагрузить ТД."""
 
 
 
 class RigthCol(BoxLayout):
-    def __init__(self, MainWindow, **kwargs):
+    def __init__(self, mainwindow, **kwargs):
         super(RigthCol, self).__init__(**kwargs)
         self.orientation = 'vertical'
 
-        self.add_widget(RigthCol_Top(size_hint_y = 0.2))
+        result = ResultTextInput(mainwindow)
 
-        result = ResultTextInput(MainWindow)
+        self.add_widget(RigthCol_Top(mainwindow, result, size_hint_y = 0.2))
         self.add_widget(result)
         # print(Helper.help(result.parent))
 
@@ -162,6 +178,7 @@ class MainWindow(BoxLayout):
         self.add_widget(lc)
         rc = RigthCol(self)
         self.add_widget(rc)
+        print(self)
 
 
 class FlexLabel(Label):
