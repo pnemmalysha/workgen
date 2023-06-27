@@ -13,6 +13,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.graphics import Color, Rectangle
+import random
 
 
 class Helper():
@@ -21,7 +22,7 @@ class Helper():
         print(obj.__dir__())
         for i in obj.__dir__():
             print(i, obj.__getattribute__(i)) \
-            if 'object' not in str(obj.__getattribute__(i)) else None
+            # if 'object' not in str(obj.__getattribute__(i)) else None
 
 
 class CustomLabel(Label):
@@ -44,22 +45,45 @@ class CustomLabel(Label):
 
 
 class LeftCol_Left(BoxLayout):
-    def __init__(self, mainwindow, **kwargs):
+    def __init__(self, **kwargs):
         super(LeftCol_Left, self).__init__(**kwargs)
         self.orientation = 'vertical'
         self.padding = [1, 1, 1, 1]
         self.spacing = 1
         # Helper.help(self)
 
-        self.add_widget(CustomLabel(text = mainwindow.bank['OSP']['label']))
-        self.add_widget(CustomLabel(text = mainwindow.bank['DATE']['label']))
-        self.add_widget(CustomLabel(text = mainwindow.bank['WAPNAME']['label']))
-        self.add_widget(CustomLabel(text = mainwindow.bank['WAPMAC']['label']))
-        self.add_widget(CustomLabel(text = mainwindow.bank['WAPMODEL']['label']))
-        self.add_widget(CustomLabel(text = mainwindow.bank['PORTNUM']['label']))
-        self.add_widget(CustomLabel(text = mainwindow.bank['SWNAME']['label']))
-        self.add_widget(CustomLabel(text = mainwindow.bank['SWMODEL']['label']))
-        self.add_widget(CustomLabel(text = mainwindow.bank['SWSN']['label']))
+        self.cl1 = CustomLabel()
+        self.cl2 = CustomLabel()
+        self.cl3 = CustomLabel()
+        self.cl4 = CustomLabel()
+        self.cl5 = CustomLabel()
+        self.cl6 = CustomLabel()
+        self.cl7 = CustomLabel()
+        self.cl8 = CustomLabel()
+        self.cl9 = CustomLabel()
+        self.add_widget(self.cl1)
+        self.add_widget(self.cl2)
+        self.add_widget(self.cl3)
+        self.add_widget(self.cl4)
+        self.add_widget(self.cl5)
+        self.add_widget(self.cl6)
+        self.add_widget(self.cl7)
+        self.add_widget(self.cl8)
+        self.add_widget(self.cl9)
+        self.bind(pos=self.show, size=self.show)
+
+    def show(self, inst, val):
+        #! заполняются не сразу при создании, а при изменении размера
+        self.cl1.text = self.parent.parent.bank['OSP']['label']
+        self.cl2.text = self.parent.parent.bank['DATE']['label']
+        self.cl3.text = self.parent.parent.bank['WAPNAME']['label']
+        self.cl4.text = self.parent.parent.bank['WAPMAC']['label']
+        self.cl5.text = self.parent.parent.bank['WAPMODEL']['label']
+        self.cl6.text = self.parent.parent.bank['PORTNUM']['label']
+        self.cl7.text = self.parent.parent.bank['SWNAME']['label']
+        self.cl8.text = self.parent.parent.bank['SWMODEL']['label']
+        self.cl9.text = self.parent.parent.bank['SWSN']['label']
+
 
 
 class CustomTextInput(TextInput):
@@ -71,28 +95,59 @@ class CustomTextInput(TextInput):
 
 
 class LeftCol_Right(BoxLayout):
-    def __init__(self, mainwindow, **kwargs):
+    def __init__(self, **kwargs):
         super(LeftCol_Right, self).__init__(**kwargs)
         self.orientation = 'vertical'
 
-        self.add_widget(CustomTextInput(text = mainwindow.bank['OSP']['data']))
-        self.add_widget(CustomTextInput(text = mainwindow.bank['DATE']['data']))
-        self.add_widget(CustomTextInput(text = mainwindow.bank['WAPNAME']['data']))
-        self.add_widget(CustomTextInput(text = mainwindow.bank['WAPMAC']['data']))
-        self.add_widget(CustomTextInput(text = mainwindow.bank['WAPMODEL']['data']))
-        self.add_widget(CustomTextInput(text = mainwindow.bank['PORTNUM']['data']))
-        self.add_widget(CustomTextInput(text = mainwindow.bank['SWNAME']['data']))
-        self.add_widget(CustomTextInput(text = mainwindow.bank['SWMODEL']['data']))
-        self.add_widget(CustomTextInput(text = mainwindow.bank['SWSN']['data']))
+        self.cti1 = CustomTextInput(text = 'Новосибирск РЦ')
+        self.cti2 = CustomTextInput(text = '26.06.2023 17:10 МСК')
+        self.cti3 = CustomTextInput(text = 'wap-nsk-rc-done-11')
+        self.cti4 = CustomTextInput(text = '78:45:58:70:a9:70')
+        self.cti5 = CustomTextInput(text = 'UniFi AP-AC-Mesh')
+        self.cti6 = CustomTextInput(text = '3')
+        self.cti7 = CustomTextInput(text = 'sw-nsk-rc-ku-5-1')
+        self.cti8 = CustomTextInput(text = 'Cisco')
+        self.cti9 = CustomTextInput(text = 'JTV2149106P')
+        self.add_widget(self.cti1)
+        self.add_widget(self.cti2)
+        self.add_widget(self.cti3)
+        self.add_widget(self.cti4)
+        self.add_widget(self.cti5)
+        self.add_widget(self.cti6)
+        self.add_widget(self.cti7)
+        self.add_widget(self.cti8)
+        self.add_widget(self.cti9)
+        self.cti1.bind(text=self.write, pos=self.write, size=self.write)
+        self.cti2.bind(text=self.write, pos=self.write, size=self.write)
+        self.cti3.bind(text=self.write, pos=self.write, size=self.write)
+        self.cti4.bind(text=self.write, pos=self.write, size=self.write)
+        self.cti5.bind(text=self.write, pos=self.write, size=self.write)
+        self.cti6.bind(text=self.write, pos=self.write, size=self.write)
+        self.cti7.bind(text=self.write, pos=self.write, size=self.write)
+        self.cti8.bind(text=self.write, pos=self.write, size=self.write)
+        self.cti9.bind(text=self.write, pos=self.write, size=self.write)
+
+    def write(self, inst, val):
+        # пока не изменится размер/положение/текст полях в объекте MainWindow не обновится bank
+        self.parent.parent.bank['OSP']['data'] = self.cti1.text
+        self.parent.parent.bank['DATE']['data'] = self.cti2.text
+        self.parent.parent.bank['WAPNAME']['data'] = self.cti3.text
+        self.parent.parent.bank['WAPMAC']['data'] = self.cti4.text
+        self.parent.parent.bank['WAPMODEL']['data'] = self.cti5.text
+        self.parent.parent.bank['PORTNUM']['data'] = self.cti6.text
+        self.parent.parent.bank['SWNAME']['data'] = self.cti7.text
+        self.parent.parent.bank['SWMODEL']['data'] = self.cti8.text
+        self.parent.parent.bank['SWSN']['data'] = self.cti9.text
 
 
 class LeftCol(BoxLayout):
-    def __init__(self, mainwindow, **kwargs):
+    def __init__(self, **kwargs):
         super(LeftCol, self).__init__(**kwargs)
 
-        lcl = LeftCol_Left(mainwindow, size_hint=(.5, 1))
-        self.add_widget(lcl)
-        self.add_widget(LeftCol_Right(mainwindow))
+        self.lcl = LeftCol_Left(size_hint=(.5, 1))
+        self.add_widget(self.lcl)
+        self.lcr = LeftCol_Right()
+        self.add_widget(self.lcr)
 
 
 class GenerateButton(Button):
@@ -108,77 +163,118 @@ class GenerateButton(Button):
 
 
 class RigthCol_Top(BoxLayout):
-    def __init__(self, mainwindow, result, **kwargs):
+    def __init__(self, **kwargs):
         super(RigthCol_Top, self).__init__(**kwargs)
-        self.mainwindow = mainwindow
-        self.result = result
         # Helper.help(self)
 
-        self.add_widget(Button(text = "RigthCol\n_Top_1"))
-        self.add_widget(Button(text = "RigthCol\n_Top_2"))
-        self.add_widget(Button(text = "RigthCol\n_Top_3"))
-        gb = GenerateButton()
-        gb.bind(on_press=self.callback)
-        self.add_widget(gb)
-    def callback(self, instance):
-        print(self.result.text)
-        print(self.mainwindow)
-        print(self.mainwindow.bank)
-        self.mainwindow.bank['SWSN']['data'] = 'xxx'
+        self.bclear = Button(text = "Clear")
+        self.add_widget(self.bclear)
+        self.bundo = Button(text = "Undo")
+        self.add_widget(self.bundo)
+        self.bredo = Button(text = "Redo")
+        self.add_widget(self.bredo)
+        self.gb = GenerateButton()
+        self.add_widget(self.gb)
+        self.bclear.bind(on_press=self.do_clear)
+        self.bundo.bind(on_press=self.do_undo)
+        self.bredo.bind(on_press=self.do_redo)
+        self.gb.bind(on_press=self.refresh_result)
+
+    def refresh_result(self, instance):
         print(f'The button {instance.text} is being pressed')
-        print(self.mainwindow.bank)
-        print(self.mainwindow)
-        print(self.result.text)
+        self.parent.result.text = f"""Добрый день
+Заявка для ОПВТ.
+В ОСП {self.parent.parent.bank['OSP']['data']} недоступна точка доступа после {self.parent.parent.bank['DATE']['data']}
+{self.parent.parent.bank['WAPNAME']['data']} {self.parent.parent.bank['WAPMAC']['data']} - {self.parent.parent.bank['WAPMODEL']['data']}
+Была подключена в {self.parent.parent.bank['PORTNUM']['data']} порт коммутатора {self.parent.parent.bank['SWNAME']['data']} ({self.parent.parent.bank['SWMODEL']['data']}, SN: {self.parent.parent.bank['SWSN']['data']}).
+Прошу проверить/перезагрузить ТД."""
+        self.parent.result.select_all()
+        self.parent.result.copy()
+        self.parent.result.cancel_selection()
 
 
+    def do_clear(self, instance):
+        self.parent.parent.lc.lcr.cti1.select_all()
+        self.parent.parent.lc.lcr.cti1.cut()
+        self.parent.parent.lc.lcr.cti2.select_all()
+        self.parent.parent.lc.lcr.cti2.cut()
+        self.parent.parent.lc.lcr.cti3.select_all()
+        self.parent.parent.lc.lcr.cti3.cut()
+        self.parent.parent.lc.lcr.cti4.select_all()
+        self.parent.parent.lc.lcr.cti4.cut()
+        self.parent.parent.lc.lcr.cti5.select_all()
+        self.parent.parent.lc.lcr.cti5.cut()
+        self.parent.parent.lc.lcr.cti6.select_all()
+        self.parent.parent.lc.lcr.cti6.cut()
+        self.parent.parent.lc.lcr.cti7.select_all()
+        self.parent.parent.lc.lcr.cti7.cut()
+        self.parent.parent.lc.lcr.cti8.select_all()
+        self.parent.parent.lc.lcr.cti8.cut()
+        self.parent.parent.lc.lcr.cti9.select_all()
+        self.parent.parent.lc.lcr.cti9.cut()
+
+    def do_undo(self, instance):
+        self.parent.parent.lc.lcr.cti1.do_undo()
+        self.parent.parent.lc.lcr.cti2.do_undo()
+        self.parent.parent.lc.lcr.cti3.do_undo()
+        self.parent.parent.lc.lcr.cti4.do_undo()
+        self.parent.parent.lc.lcr.cti5.do_undo()
+        self.parent.parent.lc.lcr.cti6.do_undo()
+        self.parent.parent.lc.lcr.cti7.do_undo()
+        self.parent.parent.lc.lcr.cti8.do_undo()
+        self.parent.parent.lc.lcr.cti9.do_undo()
+
+    def do_redo(self, instance):
+        self.parent.parent.lc.lcr.cti1.do_redo()
+        self.parent.parent.lc.lcr.cti2.do_redo()
+        self.parent.parent.lc.lcr.cti3.do_redo()
+        self.parent.parent.lc.lcr.cti4.do_redo()
+        self.parent.parent.lc.lcr.cti5.do_redo()
+        self.parent.parent.lc.lcr.cti6.do_redo()
+        self.parent.parent.lc.lcr.cti7.do_redo()
+        self.parent.parent.lc.lcr.cti8.do_redo()
+        self.parent.parent.lc.lcr.cti9.do_redo()
 
 
 class ResultTextInput(TextInput):
-    def __init__(self, mainwindow, **kwargs):
+    def __init__(self, **kwargs):
         super(ResultTextInput, self).__init__(**kwargs)
         # Helper.help(self)
-        print(mainwindow)
 
-        self.text = f"""Добрый день
-Заявка для ОПВТ.
-В ОСП {mainwindow.bank['OSP']['data']} недоступна точка доступа после {mainwindow.bank['DATE']['data']}
-{mainwindow.bank['WAPNAME']['data']} {mainwindow.bank['WAPMAC']['data']} - {mainwindow.bank['WAPMODEL']['data']}
-Была подключена в {mainwindow.bank['PORTNUM']['data']} порт коммутатора {mainwindow.bank['SWNAME']['data']} ({mainwindow.bank['SWMODEL']['data']}, SN: {mainwindow.bank['SWSN']['data']}).
-Прошу проверить/перезагрузить ТД."""
-
+        self.text = ''
 
 
 class RigthCol(BoxLayout):
-    def __init__(self, mainwindow, **kwargs):
+    def __init__(self, **kwargs):
         super(RigthCol, self).__init__(**kwargs)
         self.orientation = 'vertical'
 
-        result = ResultTextInput(mainwindow)
+        self.result = ResultTextInput()
+        self.rct = RigthCol_Top(size_hint_y = 0.2)
 
-        self.add_widget(RigthCol_Top(mainwindow, result, size_hint_y = 0.2))
-        self.add_widget(result)
-        # print(Helper.help(result.parent))
+        self.add_widget(self.rct)
+        self.add_widget(self.result)
+        # print(Helper.help(self.result.parent))
 
 
 class MainWindow(BoxLayout):
     def __init__(self, **kwargs):
         super(MainWindow, self).__init__(**kwargs)
-        self.bank = {'OSP': {'label': "Имя ОСП", 'data': "Новосибирск РЦ"},
-                     'DATE': {'label': "Дата", 'data': "26.06.2023 17:10 МСК"},
-                     'WAPNAME': {'label': "Имя wap", 'data': "wap-nsk-rc-done-11"},
-                     'WAPMAC': {'label': "MAC wap", 'data': "78:45:58:70:a9:70"},
-                     'WAPMODEL': {'label': "Модель wap", 'data': "UniFi AP-AC-Mesh"},
-                     'PORTNUM': {'label': "Порт на sw", 'data': "3"},
-                     'SWNAME': {'label': "Имя sw", 'data': "sw-nsk-rc-ku-5-1"},
-                     'SWMODEL': {'label': "Модель sw", 'data': "Cisco"},
-                     'SWSN': {'label': "SN sw", 'data': "JTV2149106P"},
+        self.bank = {'OSP': {'label': "Имя ОСП", 'data': ""},
+                     'DATE': {'label': "Дата", 'data': ""},
+                     'WAPNAME': {'label': "Имя wap", 'data': ""},
+                     'WAPMAC': {'label': "MAC wap", 'data': ""},
+                     'WAPMODEL': {'label': "Модель wap", 'data': ""},
+                     'PORTNUM': {'label': "Порт на sw", 'data': ""},
+                     'SWNAME': {'label': "Имя sw", 'data': ""},
+                     'SWMODEL': {'label': "Модель sw", 'data': ""},
+                     'SWSN': {'label': "SN sw", 'data': ""},
                      }
 
-        lc = LeftCol(self)
-        self.add_widget(lc)
-        rc = RigthCol(self)
-        self.add_widget(rc)
-        print(self)
+        self.lc = LeftCol()
+        self.add_widget(self.lc)
+        self.rc = RigthCol()
+        self.add_widget(self.rc)
 
 
 class FlexLabel(Label):
@@ -208,14 +304,16 @@ class RootWindow(FloatLayout):
     def __init__(self, **kwargs):
         super(RootWindow, self).__init__(**kwargs)
 
-        self.add_widget(MainWindow())
-        self.add_widget(Signature())
+        self.mw = MainWindow()
+        self.add_widget(self.mw)
+        self.sign = Signature()
+        self.add_widget(self.sign)
 
 
 class WorkGenApp(App):
     def build(self):
-        w = RootWindow()
-        return w
+        self.w = RootWindow()
+        return self.w
 
 
 if __name__ == '__main__':
