@@ -13,6 +13,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.graphics import Color, Rectangle
+from kivy.uix.spinner import Spinner
 import random
 
 
@@ -244,14 +245,32 @@ class ResultTextInput(TextInput):
         self.text = ''
 
 
+class MySpinner(Spinner):
+    def __init__(self, **kwargs):
+        super(MySpinner, self).__init__(**kwargs)
+        self.text='Недоступна точка доступа'
+        self.values=('Недоступна точка доступа', 'Шаблон 2', 'Шаблон 3')
+        self.size_hint=(1, None)
+        self.height = 44
+        # self.size=(100, 44)
+        self.pos_hint={'center_x': 0.5, 'center_y': 0.5}
+        self.bind(text=self.show_selected_value)
+
+    def show_selected_value(self, text, val):
+        print('The spinner', self, 'has text', self.text)
+
+
+
 class RigthCol(BoxLayout):
     def __init__(self, **kwargs):
         super(RigthCol, self).__init__(**kwargs)
         self.orientation = 'vertical'
 
-        self.result = ResultTextInput()
         self.rct = RigthCol_Top(size_hint_y = 0.2)
+        self.msp = MySpinner()
+        self.result = ResultTextInput()
 
+        self.add_widget(self.msp)
         self.add_widget(self.rct)
         self.add_widget(self.result)
         # print(Helper.help(self.result.parent))
