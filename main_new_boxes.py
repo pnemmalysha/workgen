@@ -1,7 +1,7 @@
 # 
 
 import kivy
-kivy.require('2.1.0')
+kivy.require('2.2.1')
 
 from kivy.app import App
 # from kivy.uix.stacklayout import StackLayout
