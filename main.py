@@ -14,10 +14,10 @@ from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.graphics import Color, Rectangle
 from kivy.uix.spinner import Spinner
-# import random
 from kivy.config import Config
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
-
+import time
+# import random
 
 
 class Helper():
@@ -30,15 +30,15 @@ class Helper():
 
 
 class Bank:
-    OSP = {'label': "Имя ОСП", 'data': ""}
-    DATE = {'label': "Дата", 'data': ""}
-    WAPNAME = {'label': "Имя wap", 'data': ""}
-    WAPMAC = {'label': "MAC wap", 'data': ""}
-    WAPMODEL = {'label': "Модель wap", 'data': ""}
-    PORTNUM = {'label': "Порт на sw", 'data': ""}
-    SWNAME = {'label': "Имя sw", 'data': ""}
-    SWMODEL = {'label': "Модель sw", 'data': ""}
-    SWSN = {'label': "SN sw", 'data': ""}
+    OSP = {'label': "Имя ОСП", 'data': "Новосибирск РЦ"}
+    DATE = {'label': "Дата", 'data': time.strftime("%d.%m.%Y %H:%M МСК", time.localtime())}
+    WAPNAME = {'label': "Имя wap", 'data': "wap-nsk-rc-done-11"}
+    WAPMAC = {'label': "MAC wap", 'data': "78:45:58:70:a9:70"}
+    WAPMODEL = {'label': "Модель wap", 'data': "UniFi AP-AC-Mesh"}
+    PORTNUM = {'label': "Порт на sw", 'data': "3"}
+    SWNAME = {'label': "Имя sw", 'data': "sw-nsk-rc-ku-5-1"}
+    SWMODEL = {'label': "Модель sw", 'data': "Cisco"}
+    SWSN = {'label': "SN sw", 'data': "JTV2149106P"}
 
 
 class CustomLabel(Label):
@@ -77,15 +77,10 @@ class LeftCol_Left(BoxLayout):
         self.cl7 = CustomLabel()
         self.cl8 = CustomLabel()
         self.cl9 = CustomLabel()
-        self.add_widget(self.cl1)
-        self.add_widget(self.cl2)
-        self.add_widget(self.cl3)
-        self.add_widget(self.cl4)
-        self.add_widget(self.cl5)
-        self.add_widget(self.cl6)
-        self.add_widget(self.cl7)
-        self.add_widget(self.cl8)
-        self.add_widget(self.cl9)
+        self.clset = (self.cl1, self.cl2, self.cl3, self.cl4,
+                     self.cl5,self.cl6, self.cl7, self.cl8, self.cl9)
+        for cl_ in self.clset:
+            self.add_widget(cl_)
         self.bind(pos=self.show, size=self.show)
 
     def show(self, inst, val):
@@ -115,36 +110,22 @@ class LeftCol_Right(BoxLayout):
         super(LeftCol_Right, self).__init__(**kwargs)
         self.orientation = 'vertical'
 
-        self.cti1 = CustomTextInput(text = 'Новосибирск РЦ')
-        self.cti2 = CustomTextInput(text = '26.06.2023 17:10 МСК')
-        self.cti3 = CustomTextInput(text = 'wap-nsk-rc-done-11')
-        self.cti4 = CustomTextInput(text = '78:45:58:70:a9:70')
-        self.cti5 = CustomTextInput(text = 'UniFi AP-AC-Mesh')
-        self.cti6 = CustomTextInput(text = '3')
-        self.cti7 = CustomTextInput(text = 'sw-nsk-rc-ku-5-1')
-        self.cti8 = CustomTextInput(text = 'Cisco')
-        self.cti9 = CustomTextInput(text = 'JTV2149106P')
-        self.add_widget(self.cti1)
-        self.add_widget(self.cti2)
-        self.add_widget(self.cti3)
-        self.add_widget(self.cti4)
-        self.add_widget(self.cti5)
-        self.add_widget(self.cti6)
-        self.add_widget(self.cti7)
-        self.add_widget(self.cti8)
-        self.add_widget(self.cti9)
-        self.cti1.bind(text=self.write, pos=self.write, size=self.write)
-        self.cti2.bind(text=self.write, pos=self.write, size=self.write)
-        self.cti3.bind(text=self.write, pos=self.write, size=self.write)
-        self.cti4.bind(text=self.write, pos=self.write, size=self.write)
-        self.cti5.bind(text=self.write, pos=self.write, size=self.write)
-        self.cti6.bind(text=self.write, pos=self.write, size=self.write)
-        self.cti7.bind(text=self.write, pos=self.write, size=self.write)
-        self.cti8.bind(text=self.write, pos=self.write, size=self.write)
-        self.cti9.bind(text=self.write, pos=self.write, size=self.write)
+        self.cti1 = CustomTextInput(text = Bank.OSP['data'])
+        self.cti2 = CustomTextInput(text = Bank.DATE['data'])
+        self.cti3 = CustomTextInput(text = Bank.WAPNAME['data'])
+        self.cti4 = CustomTextInput(text = Bank.WAPMAC['data'])
+        self.cti5 = CustomTextInput(text = Bank.WAPMODEL['data'])
+        self.cti6 = CustomTextInput(text = Bank.PORTNUM['data'])
+        self.cti7 = CustomTextInput(text = Bank.SWNAME['data'])
+        self.cti8 = CustomTextInput(text = Bank.SWMODEL['data'])
+        self.cti9 = CustomTextInput(text = Bank.SWSN['data'])
+        self.ctiset = (self.cti1, self.cti2, self.cti3, self.cti4,
+                     self.cti5,self.cti6, self.cti7, self.cti8, self.cti9)
+        for cti_ in self.ctiset:
+            self.add_widget(cti_)
+            cti_.bind(text=self.write_bank)
 
-    def write(self, inst, val):
-        # пока не изменится размер/положение/текст полях в объекте MainWindow не обновится bank
+    def write_bank(self, inst, val):
         Bank.OSP['data'] = self.cti1.text
         Bank.DATE['data'] = self.cti2.text
         Bank.WAPNAME['data'] = self.cti3.text
@@ -206,7 +187,7 @@ class RigthCol_Top(BoxLayout):
         self.gb.bind(on_press=self.refresh_result)
 
     def refresh_result(self, instance):
-        print(f'The button {instance.text} is being pressed')
+        # print(f'The button {instance.text} is being pressed')
         self.parent.result.text = 'Добрый день. Заявка для ОПВТ.'
         if self.parent.msp.text == 'Недоступна точка доступа':
             self.parent.result.text = f"""Добрый день
@@ -226,46 +207,17 @@ class RigthCol_Top(BoxLayout):
 
 
     def do_clear(self, instance):
-        self.parent.parent.lc.lcr.cti1.select_all()
-        self.parent.parent.lc.lcr.cti1.cut()
-        self.parent.parent.lc.lcr.cti2.select_all()
-        self.parent.parent.lc.lcr.cti2.cut()
-        self.parent.parent.lc.lcr.cti3.select_all()
-        self.parent.parent.lc.lcr.cti3.cut()
-        self.parent.parent.lc.lcr.cti4.select_all()
-        self.parent.parent.lc.lcr.cti4.cut()
-        self.parent.parent.lc.lcr.cti5.select_all()
-        self.parent.parent.lc.lcr.cti5.cut()
-        self.parent.parent.lc.lcr.cti6.select_all()
-        self.parent.parent.lc.lcr.cti6.cut()
-        self.parent.parent.lc.lcr.cti7.select_all()
-        self.parent.parent.lc.lcr.cti7.cut()
-        self.parent.parent.lc.lcr.cti8.select_all()
-        self.parent.parent.lc.lcr.cti8.cut()
-        self.parent.parent.lc.lcr.cti9.select_all()
-        self.parent.parent.lc.lcr.cti9.cut()
+        for cti_ in self.parent.parent.lc.lcr.ctiset:
+            cti_.select_all()
+            cti_.cut()
 
     def do_undo(self, instance):
-        self.parent.parent.lc.lcr.cti1.do_undo()
-        self.parent.parent.lc.lcr.cti2.do_undo()
-        self.parent.parent.lc.lcr.cti3.do_undo()
-        self.parent.parent.lc.lcr.cti4.do_undo()
-        self.parent.parent.lc.lcr.cti5.do_undo()
-        self.parent.parent.lc.lcr.cti6.do_undo()
-        self.parent.parent.lc.lcr.cti7.do_undo()
-        self.parent.parent.lc.lcr.cti8.do_undo()
-        self.parent.parent.lc.lcr.cti9.do_undo()
+        for cti_ in self.parent.parent.lc.lcr.ctiset:
+            cti_.do_undo()
 
     def do_redo(self, instance):
-        self.parent.parent.lc.lcr.cti1.do_redo()
-        self.parent.parent.lc.lcr.cti2.do_redo()
-        self.parent.parent.lc.lcr.cti3.do_redo()
-        self.parent.parent.lc.lcr.cti4.do_redo()
-        self.parent.parent.lc.lcr.cti5.do_redo()
-        self.parent.parent.lc.lcr.cti6.do_redo()
-        self.parent.parent.lc.lcr.cti7.do_redo()
-        self.parent.parent.lc.lcr.cti8.do_redo()
-        self.parent.parent.lc.lcr.cti9.do_redo()
+        for cti_ in self.parent.parent.lc.lcr.ctiset:
+            cti_.do_redo()
 
 
 class ResultTextInput(TextInput):
@@ -289,7 +241,7 @@ class MySpinner(Spinner):
 
 
     def handle_selected_value(self, text, val):
-        print('The spinner', self, 'has text', self.text)
+        # print('The spinner', self, 'has text', self.text)
         self.parent.parent.lc.lcr.dark(self.text)
 
 
