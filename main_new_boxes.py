@@ -14,7 +14,10 @@ from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.graphics import Color, Rectangle
 from kivy.uix.spinner import Spinner
-import random
+# import random
+from kivy.config import Config
+Config.set('input', 'mouse', 'mouse,disable_multitouch')
+
 
 
 class Helper():
@@ -157,7 +160,7 @@ class GenerateButton(Button):
         self.background_down = 'atlas://data/images/defaulttheme/button'
         self.background_normal = 'atlas://data/images/defaulttheme/button_pressed'
         self.background_color = [0, 1, 0, 1]
-        self.font_size = 18
+        self.font_size = self.font_size * 1.1
         # self.bold = True
         # self.color = [0, 0, 0, 1]
         self.text = 'GENERATE'
@@ -183,12 +186,19 @@ class RigthCol_Top(BoxLayout):
 
     def refresh_result(self, instance):
         print(f'The button {instance.text} is being pressed')
-        self.parent.result.text = f"""Добрый день
+        self.parent.result.text = 'Добрый день. Заявка для ОПВТ.'
+        if self.parent.msp.text == 'Недоступна точка доступа':
+            self.parent.result.text = f"""Добрый день
 Заявка для ОПВТ.
 В ОСП {self.parent.parent.bank['OSP']['data']} недоступна точка доступа после {self.parent.parent.bank['DATE']['data']}
 {self.parent.parent.bank['WAPNAME']['data']} {self.parent.parent.bank['WAPMAC']['data']} - {self.parent.parent.bank['WAPMODEL']['data']}
 Была подключена в {self.parent.parent.bank['PORTNUM']['data']} порт коммутатора {self.parent.parent.bank['SWNAME']['data']} ({self.parent.parent.bank['SWMODEL']['data']}, SN: {self.parent.parent.bank['SWSN']['data']}).
 Прошу проверить/перезагрузить ТД."""
+        if self.parent.msp.text == 'Ошибки на порту':
+            self.parent.result.text = f"""Добрый день
+Заявка для ОПВТ.
+В ОСП {self.parent.parent.bank['OSP']['data']} растут ошибки на порту {self.parent.parent.bank['PORTNUM']['data']} коммутатора {self.parent.parent.bank['SWNAME']['data']} ({self.parent.parent.bank['SWMODEL']['data']}, SN: {self.parent.parent.bank['SWSN']['data']}).
+Прошу проверить целостность кабельной линии, переобжать коннекторы при необходимости."""
         self.parent.result.select_all()
         self.parent.result.copy()
         self.parent.result.cancel_selection()
@@ -249,7 +259,7 @@ class MySpinner(Spinner):
     def __init__(self, **kwargs):
         super(MySpinner, self).__init__(**kwargs)
         self.text='Недоступна точка доступа'
-        self.values=('Недоступна точка доступа', 'Шаблон 2', 'Шаблон 3')
+        self.values=('Недоступна точка доступа', 'Ошибки на порту')
         self.size_hint=(1, None)
         self.height = 44
         # self.size=(100, 44)

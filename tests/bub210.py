@@ -9,33 +9,24 @@ from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 from kivy.lang import Builder
-from kivy.uix.bubble import Bubble, BubbleContent, BubbleButton
+from kivy.uix.bubble import Bubble
 
-
-class MyBubbleContent(BubbleContent):
-    def __init__(self, **kwargs):
-        super(MyBubbleContent, self).__init__(**kwargs)
-        pass
-
-
-class MyBubbleButton(BubbleButton):
-    def __init__(self, **kwargs):
-        super(MyBubbleButton, self).__init__(**kwargs)
-        pass
+Builder.load_string('''
+<cut_copy_paste>
+    size_hint: (None, None)
+    size: (160, 120)
+    pos_hint: {'center_x': .5, 'y': .6}
+    BubbleButton:
+        text: 'Cut'
+    BubbleButton:
+        text: 'Copy'
+    BubbleButton:
+        text: 'Paste'
+''')
 
 
 class cut_copy_paste(Bubble):
-    def __init__(self, **kwargs):
-        super(cut_copy_paste, self).__init__(**kwargs)
-        self.size_hint = (None, None)
-        self.size = (160, 120)
-        self.pos_hint = {'center_x': .5, 'y': .6}
-        self.bubcont = MyBubbleContent()
-        self.bubcont.add_widget(MyBubbleButton(text = 'Cut', size_hint_y = 1))
-        self.bubcont.add_widget(MyBubbleButton(text = 'Copy', size_hint_y = 1))
-        self.bubcont.add_widget(MyBubbleButton(text = 'Paste', size_hint_y = 1))
-        self.add_widget(self.bubcont)
-        pass
+    pass
 
 
 class BubbleShowcase(FloatLayout):
