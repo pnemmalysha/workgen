@@ -155,6 +155,15 @@ class LeftCol_Right(BoxLayout):
         Bank.SWMODEL['data'] = self.cti8.text
         Bank.SWSN['data'] = self.cti9.text
 
+    def dark(self, template):
+        if template == 'Ошибки на порту':
+            for cti in [self.cti2, self.cti3, self.cti4, self.cti5]:
+                cti.background_color = [1, 1, 1, 0.5]
+        if template == 'Недоступна точка доступа':
+            for cti in self.children:
+                cti.background_color = [1, 1, 1, 1]
+
+
 
 class LeftCol(BoxLayout):
     def __init__(self, **kwargs):
@@ -276,10 +285,12 @@ class MySpinner(Spinner):
         self.height = 44
         # self.size=(100, 44)
         self.pos_hint={'center_x': 0.5, 'center_y': 0.5}
-        self.bind(text=self.show_selected_value)
+        self.bind(text=self.handle_selected_value)
 
-    def show_selected_value(self, text, val):
+
+    def handle_selected_value(self, text, val):
         print('The spinner', self, 'has text', self.text)
+        self.parent.parent.lc.lcr.dark(self.text)
 
 
 
